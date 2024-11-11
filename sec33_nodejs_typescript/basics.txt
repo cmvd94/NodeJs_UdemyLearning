@@ -1,0 +1,47 @@
+-------------------------------------------------TYPESCRIPT----------------------------------------------------
+https://www.typescriptlang.org/
+BASIC :
+  1. TYPESCRIPT build up on javascript
+  2. TYPESCRIPT does not run in browser, typescript have to compiled to javascript and it is executed
+  3. It add certain feature to the code , so for development gives better experience .(that only exsists only in development) . helps us to write better code and try to avoid unwanted error. 
+
+installing typescript compiler , we're gonna execute in browser.(browser doesnt run typescript). so to convert typescript to javascript we need type script compiler.
+npm i -g typescript //to install typescript compiler
+
+with DENO we dont need complier .deno can run typescript . bcz TYPESCRIPT COMPILER is build inside DENO(Deno is a runtime for JavaScript, TypeScript, and WebAssembly that is based on the V8 JavaScript engine and the Rust programming language.). 
+--------------------------------------------typescript compiler-------------------------------------------------
+npm i -g typescript
+In terminal .. tsc app.ts  which compiles and create a app.js file(IMPORTANT when working with deno .js will not be visible , they are generated and store behind the scenes)
+which is linked with .html
+---------------------------------------------------------------------------------------------------------------
+CONFIGURATION:
+creating configuration file
+  1. in terminal tsc --init which creates tsconfig.json
+  2. Once tsconfig is available. we can just execute " tsc " alone which execute all .ts files 
+  3. if we specific file to compiled , then we can use tsc filename
+IMPLEMENTATION:
+  1. we define type for variable or for a function parameter
+  2. Even though if we define variable its type and value of other type. typescript will be compiled and generate .js file. so which means , its used only in development.
+  3.typescript build upon js this mean any js code work in ts file. even dom queries
+  4. check image 5
+  5. union type image 6
+  6. check image 7 for array and obj
+  7. some reptition code are hard to read. for optimisation 
+       =>type:
+       type alias used . which is not available in javascript
+       typescript has buildin type operator
+       using it we can define own type
+       can also define obj
+       =>interface: 
+       can also define obj
+       to force classes, to implement some methods/functionalities
+   8. if we added a new class or constructor function . we can use CLASS name as it type . just like we used for date
+   9. generic: 
+       generic type simple a type that interacts with other type. eg array, object
+        -> array is a type of its own ,its a list of data THATS A CORE TYPE. butit interactswith another type.
+           =>array is outer type and elements in the array as inner type  
+           //const numberArray: number[] = [];
+            const numberArray: Array<number> = [];
+            both are same. number[] is shortcut... 
+        -> PROMISE
+           => why promise is generic type. bcz it eventually resolve to a value. the value is resolve to that is the generic type fo the promise. for array it was the value stored in array

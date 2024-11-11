@@ -1,0 +1,20 @@
+router.post('/signup',
+     [  //here check email will find whereever email params is passed in req.(ie in header,body etc)
+        //we can also use body here..if we body('password'), then validator only take value from body of password variable
+        check('email')
+        .isEmail()//here with message will send error for only is email
+        .custom( (value, {req}) => {
+            //exp-val check for custom validator to return true or false OR return throw error or retun promise
+            //so then return a promise .. so exp-val wait for a promise to fullfill
+            //if no error so exp-val consider it as true . but if it resolve some rejection , then it will store as a error in exp-validator
+            //asyc validation
+            return UserModel.findOne({email: value})
+            .then( user => {
+                if(user){
+                   return Promise.reject('email already in use')
+                   //promise buildin js obj
+                   //throw an error inside of promise & reject with this erro message
+                }
+            })
+        }),
+        

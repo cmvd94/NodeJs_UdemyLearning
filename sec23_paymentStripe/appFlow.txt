@@ -1,0 +1,1 @@
+login-> / or /product -> cart -> checkoutpage -> afterpayment process -> order page can collect invoice

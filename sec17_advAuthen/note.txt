@@ -1,0 +1,5 @@
+reset password
+
+adding authorization - only respected user can edit product .
+ie at present any user loggedin can edit product.. 
+so now what we're doing, whoever created product can edit or delete , other cant do it

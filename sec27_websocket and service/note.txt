@@ -1,0 +1,35 @@
+why websocket:
+  ->conside chat application when userA send message to userB.
+  ->userA send message to server db for which server response to userA that message sent but what about userB how will it receive that message ? how server send that message to userB
+  ->if userB keep on checking for any message received with server , that means for every sec req sent btw userB to server,in which max req doesnt not have message . thinks of N number of user req to server about received message. it is totally chaos.
+  ->so websocket is introduced. that server inimates respected client about received message and delivers it.
+  -> websocket build upon http protocol. they use http handshake to upgrade http protocol to websocket protocol.
+  ->we dont want handle it server and websocket communicate with a protocol.
+  ->http ->req & res.. in websocket-> push data(server to client) and req & res.
+  ->WILL BUILD BOTH in a app
+many websocket package available.
+  -> we're using socket.io 
+  ->SOCKET SHOULD BE ADDED ON BOTH (FRONT AND BACKEND)
+implementation
+  ->npm i socket.io
+  ->after app.listen(8080). we're import socket.io which requires create server as argument. which means websocket is build upon server(which is http protocol). as we said earlier websocket build upon http protocol
+    const server = app.listen(8080,console.log("api server running on PORT 8080"));
+    const io = require('socket.io')(server, {
+        cors: {
+            origin: '*',
+            methods: ['GET', 'POST']// can add more methods
+        }
+    });
+    older version does not have cors error . now cors blocking connection so we have to set cors while creating
+  ->now using socket object we're listing for every new client connection.    
+  ->NOW INSTANT FEED POST IMPLENTATION BTW CLIENTS.
+      =>when a post is created by a client with an existing socket connection , now we have inform all connected clients about the new feed post.
+      =>so have to share the connection. in app.js
+      =>to able to re-use one and the same IO object that manages the same cpnnection that is exposed, new socket file is created. in which we variable store io socket connection. exports object with fun 
+           1. init  initialize socket and stores obj in io variable of socket.js file and return to app.js for listening
+           2. getIO . fetch data from that io which is shared btw user.
+      =>Now in feedController. while creating a post we have inform all user. importing socket.js
+           calling getIO in which socket allow to various operation, but in our case we have tell user so we can use broadcast which inform all connected user expect the user who created. but in emit socket inform all(including user who created)
+           getIO.emit 1st argument should be channel in which client listen, and 2nd which is optional , we sent a action and post data to socket.
+      =>similarly io.getIO().emit() added for edit & delete post
+      

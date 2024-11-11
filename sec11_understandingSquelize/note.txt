@@ -1,0 +1,25 @@
+npm instal --save sequelize
+sequelize also need mysql2 package
+
+mysql we have create table in workbench and we linked it.
+but in sequelize, it will create table by itself.so we should create a model in javascript line 
+check in database.js - create connection
+check model/cart.js or product.js - creating a model 
+
+atlast in app.js we're initialising
+
+______________________________________________
+
+/*associaton*/
+//User created this Product       
+//{..condition..} is optional , how the relation should be, if user deleted then related product also deleted
+ProductModel.belongsTo(UserModel, { constraints: true, onDelete: 'CASCADE'});
+UserModel.hasMany(ProductModel);//one user has many product 
+/*we already created Product table it will not overwrite new info. so we have force it by setting sync( force: true)*/
+
+/*it sync model in database by creating the appropriate table*/
+sequelize
+.sync( {force : true })
+
+force :true should be used once to alter any table relation. because it will delete all content of table for each execution
+check table now product table will have userid (linked)

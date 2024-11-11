@@ -1,0 +1,5 @@
+https://github.com/expressjs/express/blob/master/lib/response.js
+check res.send()
+
+in application
+check app.listen();

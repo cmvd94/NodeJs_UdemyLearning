@@ -1,0 +1,54 @@
+start -> npm start..  automatically site open in browser
+
+understanding REACT:
+
+for authentication topic:
+   Rest API generate token once logged in.which is stored in client side.
+   now for each request token has to be sent for authenticate request.
+   how can we send:
+      ->we cannot sent in body because GET & DELETE method does not have body.
+      ->one way is we can sent in query paramter (or)
+      ->we can set in header which has all meta data
+      ->in this code . token  added in header
+      --->SO IN GENERAL FOR EVERY FETCH , TOKEN(JWT) IS SET IN HEADER<---
+      headers: {
+        Authorization: 'Bearer ' + this.props.token
+      }
+      Authorization we can have any name, but this is a official header use of passing authentication info to backend
+      why 'Bearer '. Bearer with white space. this is just convention to identify that the type of token client have.
+      Bearer token is an authentication token , typically use Bearer for json
+
+=>src->app.js(react start)
+
+=>src->pages->feed->feed.js( responsible of starting page) in that there is couple of routes
+1.loadPosts: has pagination login & handle /feed/post req
+   ->pagination..in fetch url query parameter is added with page value
+   
+2.finishEditHandler: handle accept button in new post popup
+   -> set url for new post, fetch called with url , method , data with header set application/json..(not sending data at present)
+   ->now we're tring to send file(ie image). json can not handle it , because it has only text as data. so setting header application/json will lead to site crash.so now it send in formdata(rendering view.multipart form).check how it is done in code
+   ->ON EDIT mode..edit url is set ..error: sending old image path, small correction is made.
+3.deletePostHandler: delete post req. added url and method
+
+4.user status handle:
+   ->componentDidMount & statusUpdateHandler: regarding user status.
+   ->respective url methods and data are sent
+  
+
+=>src->pages->feed->singlepost->singlepost.js( detail on single post & go to backend to fetch data) in that there is couple of routes
+   -> componentDidMount: handle for single post detail. inspite of req url is set , we have set ul for image fetch
+
+=>src->component->feed->feededit->feededit.js
+    ->validating input
+
+=>src->app.js(has signup, login, logout)
+1.signupHandler: we have send data entered in form. Method,Header and body are defined.
+   ->class App extends Component in which now isAuth is false// previously single we're building post .maintained we're authenticated
+
+----------------------------------------------------------------------------------------------
+socket connection:
+   ->npm i socket.io-client
+   ->feed.js . in componentDidMount added openSocket('http://localhost:8080'); to create socket connection
+   ->added a fun addPost in feed.js.. for client instant feed view from other client
+   ->now we listen to that channel which is set in server side. and check what type of action happened create/edit , respective fun is called
+   ->few coded added and removed fo socket connection

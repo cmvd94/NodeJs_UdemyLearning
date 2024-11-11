@@ -1,0 +1,46 @@
+/*POST after pressing login store in db*/
+exports.postLogin = ( req, res, next ) => {
+    req.isLoggedIn = true;
+    //so we have set isAuthenticated for all render call.(ie shop and admin controller)
+    //in navigation.ejs .. if authentication is true then admin add-product and list of product will be displayed in navigation bar
+    //problem is even when is set isLoggendIn true here and assigning it to all res.sender it wont work
+    //bcz each req from user is independent so now we're setiing it to true in current login request.
+    //it response send or redirect it will eventually send  a new get request which total independent ,so that set will be expired 
+    //check ..setting true . then redirected , we wont get admin navig area
+    res.redirect('/');
+}
+.......
+so we have set GlobalVariable for authentication is confirmed,
+but the problem . the variable wil be shared across all request and also btw all user
+..so COOKIES are used ... store data of single user in browser. which customise to the user and
+sent with request that i have authentication
+
+//check inspect->application->cookies.
+    res.setHeader('Set-Cookie','LoggedIn = true')
+set-cookie is syntax.. loggedIn name which we keep
+session when browser closed cookie erased.
+
+browser automatically send cookie with user request . under req header
+console.log(req.get('Cookie'))
+
+problem is we can manupulate cookie in browser but just editting its value.
+so storind senstive data is not ideal.
+
+we can use cookie for tracking user.
+our cookie can sent to other page.. tracking-pixel
+
+configure cookie:
+
+res.setHeader('Set-Cookie','LoggedIn = true; Expires =   ')
+res.setHeader('Set-Cookie','LoggedIn = true'; Max-Age=  ')//in second
+res.setHeader('Set-Cookie','LoggedIn = true; Domain= ')//to which cookie to sent
+res.setHeader('Set-Cookie','LoggedIn = true; Secure')//works only in https
+
+res.setHeader('Set-Cookie','LoggedIn = true; HttpOnly')//we can access cookie from client side javascript running in browser
+
+there are package to set cookie
+
+npm i express-session
+normally session are stored in server/computer memory so its not effective way
+
+npm i connect-mongodb-session // to store session in db 

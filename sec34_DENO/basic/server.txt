@@ -1,0 +1,41 @@
+/*****deno run --allow-net app.ts*****/
+/* const server = Deno.serve({ port: 3000 }, (_req) => {
+    return new Response("Hello, World!");
+  });
+ */
+  /* const server = Deno.serve({ port: 3000 });
+
+  // Handle incoming requests
+  console.log("HTTP server is running on http://localhost:8000");
+  
+  for await (const request of server) {
+    request.respond({ body: "Hello, World!\n" });
+  } *//* 
+    Deno.serve(
+        { port: 3000, hostname: "0.0.0.0" },
+        (_req) => new Response("Hello, world")
+      ); */
+      
+/* //listen in 127.0.0.1:8000
+      Deno.serve((_req) => new Response("Hello, world"));
+ */
+/*//deprecated
+      import { serve } from "https://deno.land/std@0.203.0/http/server.ts";
+
+      const handler = (request: Request): Response => {
+        const url = new URL(request.url);
+        
+        if (url.pathname === "/") {
+          return new Response("Welcome to the Home Page!\n", { status: 200 });
+        } else if (url.pathname === "/about") {
+          return new Response("About Us Page\n", { status: 200 });
+        } else {
+          return new Response("Page Not Found\n", { status: 404 });
+        }
+      };
+      
+      console.log("HTTP server is running on http://localhost:8000");
+      
+      serve(handler, { port: 8000 });
+      
+ */     

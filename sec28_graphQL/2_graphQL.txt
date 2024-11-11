@@ -1,0 +1,74 @@
+https://github.com/unsivilaudio/node.js-complete-guide-2024
+THEORY:
+1.GraphQl is also stateless and client independent . with high query felixibilty
+2.higher query felixibilty: we can select specific field of a Document saved in db collection. 
+3.compare to REST which has different end point (ie api) but in GRAPHQL will use only one endpoint. in each req body there is GraphQl query expression, for which data is fetched .
+4. type of definition 
+    => QUERY definition which req- method post to fetch data, 
+    => MUTATION definition handle PUT,POST,PATCH,UPDATE.
+    => SUBCRIPTION definition handle socket connection
+5. Resolver contain logic for all definition
+----------------------------------------------------------
+npm i graphql
+//npm i express-graphql//packing is not available
+npm i graphql-http //for parsing
+----------------------------------------------------------
+BASIC: image 8
+=>app.js
+    1. importing  { createHandler } from require("graphql-http/lib/use/express"), used in handling routes for parsing graphql data. in which we define schema and rootvalue which is resolver(method/fun)
+=>schema.js
+    1. require buildSchema from graphql. which can be parsed by graphql-http while sending data
+    2. export = buildSchema, return schema obj 
+    3. define schema obj with backtick ``
+    4. schema obj with rootquery . in rootquery obj has key and value (ie value have query and respective obj)
+    5. in that field must have value then used ! alone with type 
+=>resolvers.js
+    1. each query in rootquery will have method or function which has value
+=>in POSTMAN app:
+    1. to get data graphql use POST 
+    2. sent json obj from postman to /graph route
+    {
+    "query": "{ world { text views } }"
+    }
+--------------------------------------------------------------------------------
+FOR OUR APPLICATION:
+1. defined graphQL schema , which help graphql to fetch and save data.
+2. resolver code is defined for createuser(signup)
+    //args obj which has all arugmenst passed through the function.in this case it only one
+    //so inside args we have userInput obj
+    //createUser(args, req)//we can also use destructuring and also for async 
+    createUser: async function({userInput}, req)
+        //const email = userInput.email;
+        //return UserModel.findOne().then().catch() if thenable then return must in resolver bcz graphql does not wait to resolve
+        //but in async await it automatically return , we dont see the return statement here but it is there.
+        const existingUser = await UserModel.findOne( {email: userInput.email}) 
+3.used graphiql middleware to send req
+4.input validation. we used express-validator in route .but here we have only one routes so we cant validate for all operation. using validator package in resolver. (which is build on express-validator package)
+    npm i  validator
+5. Adding more field in error message (check image 10)
+    in /graphql route middleware. there is method formatError, which receive the error, detected by graphql. also allow us to return our own format
+6.login definition added in graphQl schema and respective resolver is written
+7.isAuth middleware in app.js (to check user has proper token)
+8.creating post: schema->createPost(in mutation)
+    grpahql work only with json data.
+    for sending file/image we have use thirdy party package or using a endpoint(for handling image) like rest api
+    let that endpoint store the imgae and return path to image, send other req with that image path and data (createpost) to our graphql
+    /*graphql can not handle image, so adding endpoint for image*/
+    //REST API. now this image path handled in frontend and new req is sent to create post with image path which is created now
+    app.put('/post-image', (req, res, next) => {
+    if(!req.file){
+        return res.status(200).json({ message: 'no file provided'})
+        //sending status(200)bcz in update/edit if same image then file is not set
+    }
+    if(req.body.oldpath){
+        deletePath(req.body.oldpath);
+    }
+    return res.status(201).json( {message: 'file stored', filePath: req.file.path})
+})
+
+9. getallpost query
+10. getAPost query and resolver
+11. edit post query and resolver:
+12. get a post
+13. delete post
+14. get and set status

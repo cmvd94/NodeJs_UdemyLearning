@@ -1,0 +1,46 @@
+ProductModel
+    .find()
+    .select('title')
+    .populate('userId')
+    //path or nested path//in product we have userid.if we want detail of that obj(ie here it is user obj). 
+    //then we can use populate.
+    //which will collection the data and display to us... we can also access embedded data.
+    .then( (product) => {
+        console.log(product);
+        res.render('admin/products', {
+        prods: product,
+        pageTitle: 'admins products',
+        path: '/admin/products'
+        });
+    })
+    .catch(err => console.error(err))
+
+------------------------------------------------------
+    .select('title price') // we can select specific property form the obj. here we have selected title price
+    //output will have title and _id of the product. To negelect id then .select('title -_id')
+    //now id is neglected 
+    .populate('userId', 'name') //in populate select method
+
+-----------------------------------------------------------
+{...productId._doc} .. mongoose full out all data in that id and save all details of that product
+--------------------------------
+I use the product key in user cart item, so I don't map to a new array, and Mongoose saves full product data to database.
+
+So I think the way we map to a new array may break the populate functionality.
+
+The product object is not a plain object, it has other properties added by Mongoose.
+
+You can use the toObject() method too. It converts the product object to a plain object.
+
+
+
+const products = user.cart.items.map((item) => ({
+  product: item.productId.toObject(),
+  quantity: item.quantity,
+}));
+----------------------------------
+_doc has an underscore because it's a private property from the MongoDB driver, not really meant to be used that way .
+There is a .toJSON() method that will yield the same result, and is an official mongoose method and not a hack.
+
+
+

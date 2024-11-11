@@ -1,0 +1,69 @@
+Environment variable:
+  1.supported by nodejs, where we can pass certain config and values into our node applicaton from outside(ie we're not hard coding certain values)
+  2.values get injected when node server starts, that allow different values in development or in production.
+  3.Using PROCESS object which is a Globally available in node app(node core runtime).
+  4.using process.env deploying in mongodb url, port, stripe
+  5.now using nodemon we can config. create a file nodemon.json . config repective value (still in development)
+  6.we will not use nodemon in poduction . and also we wont restart server for every changes
+  7. so in package.json script: creating "start:dev" ie dev can be any name. in which assigning nodemon 
+     where as in start defining all env variable and node.js ... nodemon will fetch nodemon.json package while running
+    "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "MONGO_USER=Nodejs MONGO_PASSWORD=Nodejspassword MONGO_DEFAULT_DATABASE=fileUPOWN STRIPE_KEY=sk_test_51PnXScFd0LnzjZc5DYxhtUNb4NYuxuOEUdxFaP4GPNSTVCMod2tEc454dXJlDS8d2YiHzK1pXtbwgTRyLnTqDrfB00Q5r6IiSq node app.js",
+    "start:dev": "nodemon app.js"
+    }  ,
+  8.above code is not working in windows
+    tried different methods
+    https://www.udemy.com/course/nodejs-the-complete-guide/learn/lecture/12198022#questions/9925546
+    Now used CROSS-ENV in front 
+    "start": "cross-env NODE_ENV=poduction MONGO_USER=Nodejs MONGO_PASSWORD=Nodejspassword MONGO_DEFAULT_DATABASE=fileUPOWN STRIPE_KEY=sk_test_51PnXScFd0LnzjZc5DYxhtUNb4NYuxuOEUdxFaP4GPNSTVCMod2tEc454dXJlDS8d2YiHzK1pXtbwgTRyLnTqDrfB00Q5r6IiSq node app.js"
+  9.in script NODE_ENV=poduction , expesssjs change certain things detail the error it through and optimise the code.
+    our hosting provider will also set this
+  10. in stripe we use testing . but in which we cant get production key
+
+SECURE HEADER:
+   1. helmet packgage.. we can secure node express applicaton
+   2. added header to our package is sent
+   3. app.use(helmet())
+
+OPTIMISED ASSET/COMPRESSION:
+   1.npm i compression
+   2.app.use(compression())
+   3.
+LOGGING:
+   1.npm i morgan
+     app.use(morgan("combined", {stream: accessLogStream}));
+SSL/TLS:
+   1.securing data between client and server
+   2. we can create own ssl certificate but browser will warn that used unkown ssl certificated. but in production we wil use ssl certificate provided by a known certificate authority which the browser trust
+   3.now we're creating own certificate .. openssl -for mac and linux it is available in default 
+     for windows: https://slproweb.com/products/Win32OpenSSL.html download
+     openssl req -nodes -new -x509 -keyout server.key -out server.cert
+
+     in windows above cmd didnt working, so do this
+     Assuming you downloaded OpenSSL using the following site:
+      https://slproweb.com/products/Win32OpenSSL.html
+      1. Press the Windows key.
+      2. Type "Path" in the search box and select "Edit the system environment variables"
+      3. Click on "Environment Variables" near the bottom.
+      4. In the "System Variables" section double click on the "Path" variable.
+      5. Click "New" on the right-hand side.
+      6. Copy and paste this into the box:
+      C:\Program Files\OpenSSL-Win64\bin
+      7. Exit out and restart your terminal (or VSCode if you're using the integrated terminal). You should be good to go from there.
+   4. while config common name: is domain name... after entering details. 
+            2 new file generated.   server.cert(sent to client), server.key(privatekey)
+   5. check image 6,7,8
+
+DEPLOYMENT:
+   1.Git is vesion control sys- save & manage our source code. 
+     commit,branch,repository...... download git for respective OS
+   2.IMPORTANT in package.json add 
+       "engines":{
+          "node": "20.15.0"
+        }
+   3.then need to add code to repository. (learn more about git and github)
+   4.hosted in render.com.
+   5.need to add ip of hosting provider in mongo atlas. 
+   6.global variable should initialised in hosting
+   1.Heroku hosting provider.(now its is cost )

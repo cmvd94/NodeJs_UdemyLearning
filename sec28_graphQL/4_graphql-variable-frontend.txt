@@ -1,0 +1,55 @@
+FRONTEND
+
+whenever we pass a dynamic value to query, we use interpolation syntax ie ${}...this work but this is not recommeded way const graphqlQuery = {
+      query: `
+        { 
+          getAllPosts(page: ${page}) {
+            posts {
+              _id
+              title
+              content
+              imageUrl
+              creator {
+                name
+              }
+              createdAt
+            }
+            totalPosts
+          }
+        }`,
+    };
+    --------------------------to-----------------------------------
+    
+    const graphqlQuery = {
+      query: `
+        query FetchPosts($pageInput: Int!){ 
+          getAllPosts(page: $pageInput) {
+            posts {
+              _id
+              title
+              content
+              imageUrl
+              creator {
+                name
+              }
+              createdAt
+            }
+            totalPosts
+          }
+        }`,
+        variables:{
+          pageInput: page
+        }
+    };
+--------------------------------------------------------------------
+const graphqlQuery = { 
+      query: `
+         mutation UpdateUserStatus($userStatus: String){
+            updateStatus(status: $userStatus) {
+                status
+            }
+         }`,
+         variables: {
+          userStatus: this.state.status
+         }
+    }

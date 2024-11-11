@@ -1,0 +1,54 @@
+Automated testing:
+    ->unit testing and intergration testing.
+    ->we write code to test our code.
+    ->npm install -D mocha 
+    -> install chai@4.4.1 ... bcz chai 5 have error Error [ERR_REQUIRE_ESM]: Must use import to load ES Module. ES modules make use of the import statement instead of the require statement.
+    ->in gerneral package.json have test in script . in which just write mocha
+       "scripts": {
+    "test": "mocha --timeout 10000",//timeout is used when conecting with DB, fetch time delay, so timeout increased to 10s
+    "start": "nodemon app.js"
+     },
+    ->now npm test, runs smocha.. mocha in default look for a folder test
+    -> mocha execute what we want to check AND chai verify the value
+IMPLEMENTATION:
+  1. it('title', function)
+  2. inside function we use chai should/expect/assert which return object with that we can other verify operation
+  3. eg.now let test is-auth middileware. in which will test only if the header is set.
+  4. simple using it() difficult to identify if we implement to many test cases. do decribe is used inside which it() are used. we can also use describe inside another describe
+  5. we should test third party package if it true or not. we SHOULD ONLy OUR CODE.NOT 3RD PARTY package
+  6. IMPORTANT: in is-auth.js after verify jwt we will set req.userId for upcoming req from the user after login . But HOW CAN WE VERIFY IF req.userId is set. bcz in testing jwt verify eventually fails, we dont have proper token . so we have SKIP that JWT VERIFY part , so that we can check is req.userId property is set.
+  why is checked bcz after token verification if we missed to set req.userId. so test case handle for it.
+    ->  using stubs or mark method. so will replace jwt.verify with simpler method
+         jwt.verify = function(){
+            return { userId : 'abc'}
+        }
+    ->IMPORTANT pblm here is , will SKIP for all it() cases below not only in that specific it() is initialised
+    => npm i sinon -D. /// stub using package
+        //sinon stub //it also register function call. can also check has function called , no matter what it executes
+        sinon.stub(jwt, 'verify')
+        jwt.verify.returns({ userId: 'abc'});
+        isAuth(req, {}, ()=>{});
+        expect(req).to.have.property('userId');
+        expect(req).to.have.property('userId');
+        expect(jwt.verify.called).to.be.true; //check function is called or skipped
+        jwt.verify.restore(); //IMPORTANT
+   7. testig in auth and feed controller which fetch data fom db 
+        2way we can check  1. if db operation(like find,findOne etc) fails or 2. check if the User,post is available after db operation
+        => also we have handle ASYNC function.. in it('text', function(Done) ) and inside thenable done(); so that mocha wait for the result.
+          => stub db fetching operation . checking what if it fails to fetch user data fromdb(eg for UNIT testing)
+               stub findOne , force findOne to throw err. executing code, checking if err or not. then restore findOne
+          => now setting a Live DB for testing .To check db operation .
+              connect and discoonect with database is IMPORTANT.
+              ->for some cases like testing adding a user. statically defining a user, which will be used repeatly for checking that case. so test fails for the second time because user already registered. so in sunch case we have clear DB. bcz testing process will not finish bcz of error (since using Db). now if we run multiple time it will passes
+   8. HOOK by mocha.
+        As we seen earlier we have connect DB, disconect DB and also erase data fom DB which is declared for each test case. 
+        So mocha have  a BEFORE and AFTER call in which we can write connect and disconnect process respectively.
+        Also BEFOREEACH and AFTEREACH for it() case. if there is any clean up or added input needed we can use for specific case. whereas before and after run at common for all case. 
+   9. FEED CONTROLLER.
+        we have auth middileware
+   10. we can also test cookie and session
+   11. there are also package for testing session, promises etc
+
+   MOCHA   CHAI   SINON
+
+

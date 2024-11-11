@@ -1,0 +1,17 @@
+Asycn code.
+   Current code we're using thenable(or callback) for Asycn operation , which is in return promise.
+   .find,.countDocument, all take millisec delay which is also async code. which is return promise obj
+   so once the promise Fulfilled , interlinked code will run ie .then()
+
+for those async code we can use await
+
+implementaion: 
+ Function which has Asycn code should be defined with async prefix argument and await inside Function
+ ->Current update we can use await outside async function .ie globally. previously it is not possible (should be under async fun)
+ ->async fun, await , try&catch
+ ->await code while executing it will convert to then and catch.
+ ->so code below AWAIT will work after that await...........................
+ ->imp point
+     all mongoose operation we're using async await. like find,countDocument etc does not return real promise but return promise like obj which will work similar no problem in output.
+     to get real promise -- await Postmodel.find().exec().. using exec it return real promise .but there is no differnece in output.
+     where as bcrypt i=in default will return real promise 

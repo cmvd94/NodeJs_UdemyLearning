@@ -1,0 +1,51 @@
+npm i express-validator
+
+...........
+const { check } = require('express-validator');
+router.post('/signup', check('email').isEmail(), authController.postSignup);
+check is email or not then store in error(array of obj) which is available in that package
+
+then 
+
+const { validationResult } = require('express-validator');
+const error = validationResult(req);
+    if(!error.isEmpty()){
+        console.log(error.array())
+        return res.status(422).render('auth/signup', {
+            path: '/signup',
+            pageTitle: 'Signup',
+            isAuthenticated: false,
+            errorMessage: error.array()[0].msg
+          });
+
+package check is anything stored in that error obj.
+
+we can also customise error message
+router.post('/signup', check('email').isEmail().withMessage('please enter valid email'), authController.postSignup);
+
+-----------------------------------------------------------------
+https://www.udemy.com/course/nodejs-the-complete-guide/learn/lecture/12025608#questions/20978122
+another example how to declare
+
+on auth.js (routes):
+
+const exValidator = require('express-validator')
+router.post("/signup", exValidator.check('email').isEmail() , authController.postSignup);
+
+on auth.js (controller):
+
+const exValidatorRes = require('express-validator').validationResult
+const errors = exValidatorRes(req)
+  if (!errors.isEmpty()) {
+    console.log(errors.array())
+    return res.status(422).render("auth/signup", {
+      path: "/signup",
+      pageTitle: "Signup",
+      errorMessage: errors.array(),
+    });;
+  }
+
+Hope that will help you guy
+............................................................................................................
+saintizer: 
+.trim(

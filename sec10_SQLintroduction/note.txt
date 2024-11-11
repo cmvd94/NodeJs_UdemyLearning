@@ -1,0 +1,7 @@
+1st we should create table in mysql app,link it to our applicatiob(eg database.js)
+
+we can do it for all sort db action(ie cart, delete etc).
+but queries get more and more complex when application logic becomes,
+at some point we have to connect table. at present we're not that.
+
+we can do all of that with MYSQL package. (3rd party package)

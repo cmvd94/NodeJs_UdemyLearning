@@ -1,0 +1,39 @@
+Initial setup:
+  1. require method is only available in node. so typescript does not know where we planned to run this code.
+        so for nodejs
+        => npm i --save--dev @types/node (only dev dep)
+        @types package provided by typescript. which are typescript translation for js feature.
+        node_modules -> @types ... find .d.ts file in which all coe node module translated to ts (instruction)
+  2. extra support for ide:
+        auto completion or suggestion is not available ie app. after that suggestion is not available
+        Also ts does not know how this method look like eg app.listen( { port: 3000}) which is an error but does not know
+        => npm i --save-dev @types/express
+        even this does not resolve our problem.
+        in tsconfig file ,set
+            "moduleResolution": "Node",
+            "module": "commonjs", 
+            "target": "es2016"
+        And chnage require to import.... which typescript inbuild uses import.
+        const express = require('express');
+        import express from 'express'
+        after changing to import syntax.when we keep cursor on variable it show detail and auto suggestion also available
+--------------------------------------------------------------------------------------------------------------------------
+BUILD:
+  1. after developing code . tsc then run using .js , bcz node can execute only js code
+--------------------------------------------------------------------------------------------------------------------------
+in general we use typescript for error handling . so when we use req.body/query/params typescript does not kmow what body has or what type is. even if we make some typo it wont let us know . to avoid we type cast that
+   defining req. which as has obj like this
+   type RequestBody = { text: string}
+   type RequestParamas = { todoId: string}
+   const body = req.body as RequestBody
+
+changing .js directory:
+   when we compile .ts file .js file create on the same place as .js
+   to avoid it . in tsconfig "outDir": "./<name>",
+   now when we compile all .js stored in path which we specifies
+
+moving all ts file to src folder
+   in tsconfig "rootDir": "./src"
+
+   for executing node, we have do in outDir path .so change it in package.json
+   "start": "node <foldername>/app.js"

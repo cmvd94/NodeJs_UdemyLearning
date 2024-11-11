@@ -1,0 +1,16 @@
+To use ES module for import and export. instead of require() and exports used in nodejs.
+ import express from express
+ should use .mjs as extension or in package.json add   "type": "module" 
+ IMPORTANT: gobal variable ie __dirname , __filename is NOT defined in ES modules.
+-------------------------------------------------------------------
+PROMISES
+  when nodejs is created , promises was not there ,
+  so we used call back approach
+  fs.readfile('filename','utf8', (err, data) => {
+
+  })
+  now many api has promises check doc. and few still in callback
+    we can use thenable or also async await .
+    const fs = require('fs').promises
+    or
+    import fs from 'fs/promises'

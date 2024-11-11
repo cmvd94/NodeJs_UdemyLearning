@@ -1,0 +1,52 @@
+MUTATION DEFINITION:-
+THIS IS SCHEMA FOR GRAPHQL. so that we can handle query
+THIS SCHEMA DOES NOT DEFINE FOR MONGODB MODEL .. THAT IS TOTALLY DIFFERENT
+->snippet: for understanding move from bottom (type schema) to top(post schema) 
+note:- in graphQL schema. fieldname : datatype. if it is userdefined obj then (datatype) structure should be defined.
+        
+        module.exports = buildSchema(`
+            // post is defined
+            type Post {
+                _id: ID!
+                title: String!
+                content: String!
+                imageUrl: String!
+                creator: User!
+                createdAt: String!
+                updatedAt: String!
+            }
+            
+            //user obj is defined
+            type User {
+                _id: ID!  //graphQL special. this will be signaled as unique and treated as ID
+                name: String!
+                email: String!
+                password: String //is not manditory for sending back to client
+                status: String!
+                post: [Post!]! // so post have to define
+            }
+            
+            //input type .. defining input obj
+            input UserInputData{
+                email: String!
+                name: String!
+                password: String!
+            }
+
+            //type manditory
+            type RootMutation {
+                //here we find operation
+                //create user singup , for which receive user data. to store in db.
+                //so resolver fun have a userInput obj as argument . we also have a variable.
+                //since userInput is user definedObj so its(datatype) input format should be defined.
+               
+                createUser(userInput: UserInputData): User!
+                                                     // User! obj is received 
+                what do we get back when user is created ? -> User Obj() so user obj should be defined
+                User! - obj which we received ,will be send by graphql to client side.            
+            }
+            schema { //definition starting
+                mutation: RootMutation
+            }  //mutation for put, post, pact, delete operation
+        `)
+        

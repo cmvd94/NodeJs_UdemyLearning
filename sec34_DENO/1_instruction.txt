@@ -1,0 +1,16 @@
+DENO is alternate to NODE.
+DENO is developed by node team
+...................................................................................................................
+install deno  in powershell irm https://deno.land/install.ps1 | iex 
+in windows no issue. 
+when in mac/linux we have to added something in home/.bash_profile (command which is to be added will be said by in terminal after installiation)
+now deno can run globally similar to node. 
+-------------------------------------------------------------------------------------------------------------------
+how file executed: 
+deno run <filename>
+if .ts file. it will compile ts to js then executes but .js not generated
+-------------------------------------------------------------------------------------------------------------------
+feature: 
+deno has core philosophy of  being as browser compactable as possible.
+deno has fetch api.
+--------------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,32 @@
+in general when we click delete on web, on server side we will delete that product and redirect it.
+here 
+in admin Product.ejs
+
+<form action="/admin/delete-product" method="POST">       
+//urlencoded will access this data
+to
+//now function is called which is written is admin.js(public folder) and is imported at last of this ejs file ((<script src="/js/admin.js"></script>))
+<button class="btn" type="button" onclick="deleteProduct(this)">Delete</button>
+
+from submit to button
+<button class="btn" type="button">Delete</button>
+............................................................
+understanding:
+admin product page ,we have statically servred /public/js/admin.js(delete call in admin.js is called when delete pressed admin/produc page)in which query selectore is used, 
+which mean when delete is pressed now browser wont request url instead now queryselector in admin.js handle the req(chk image where admin.js servered.)
+now fetch in admin.js send request and wait for response. 
+product is deleted. but the result will be changed only after refresh, so for this bug we have remove html article of that product for instant update
+/public/js/admin.js
+uses query selector to controll dom
+
+since the deleted product in controller have to handle in client side ,so
+const productElement = btn.closest('article');
+productElement.parentNode.removeChild(productElement);
+ done. chk image
+
+in route
+since we used javascript request so we used route.delete instead of .post
+
+and in controller,
+we send json message to browser.(so delete product without reload)
+ 

@@ -1,0 +1,3 @@
+there is connection bug btw deno and mongodb atlas.
+ so connected with local mongodb
+chk ../deno_crud folder

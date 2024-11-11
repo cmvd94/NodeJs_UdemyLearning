@@ -1,0 +1,74 @@
+
+mongoDB is noSQL db
+//in SQL or other db we have create table and enter data.  
+
+mongoDB - collection - Documents
+
+mongosh
+
+show dbs
+
+use app//unless untill data is stored ,db wont be created
+
+cls //clear
+
+https://www.geeksforgeeks.org/types-of-databases/
+
+https://studio3t.com/academy/lessons/mongodb-basics/
+
+let collection name be users 
+db.users.insertOne({ data })
+db.users.insertMany([ {  },{ } ])
+
+todisplay
+db.users.find()
+db.users.find().limit(2)
+db.users.find().sort( {name: 1} ) //1 is AtoZ //-1 is ZtoA
+db.users.find().sort( {name: 1} ).limit()
+db.users.find().skip(1).limit(2)
+db.users.find({name: "vishnu"})
+//select in specific find. below eg:vishnu is found then in which show name and age
+db.users.find({name: "vishnu"},{name: 1,age : 1})
+db.users.find({name: "vishnu"},{name: 1,age : 1,_id:0})
+db.users.find({name: "vishnu"},{age : 0})
+//complex 
+db.users.find({name: {$eq :"vishnu"})//equal too
+db.users.find({name: {$ne :"vishnu"})
+db.users.find({age: {$gt :30})//greater than
+db.users.find({age: {$gte :30})//greater tha equal too
+db.users.find({age: {$not: {$lte :30}})
+$lte,$lt
+db.users.find({age: {$gte :30, $lt:40})
+db.users.find({age: {$exists :true}) //age available obj is displayed
+db.users.find({age: {$exists :false})
+
+db.users.find({name: {$in :["vishnu" , "not available"]}) //willcheck if available will display
+db.users.find({name: {$nin :["vishnu" , "sankar"]}) // willcheck and will not display this name obj
+
+db.users.find({$and: [age: {$gte :30, $lt:40}, {name:"vishnu"}])  === db.users.find({age: {$gte :30, $lt:40}, name:"vishnu"})
+db.users.find({$or: [age: {$gte :30, $lt:40}, {name:"vishnu"}])
+db.users.find({age: {$not: {$lte :30}})
+
+db.users.find({$expr: {$gt:{"$compare1Key,"$compare2key"}}})//expr used to compare ,$gt condition to compare1 and 2
+
+db.users.findOne(...condition...)//only one find
+db.users.countDocuments(...condition...) //return length or count 
+
+//update
+db.users.updateOne({age:44} ,{$set: {age:34}})
+db.users.updateOne(_id:ObjectId("  "),{$inc: {age: number } })//number value should be number of value to increment age
+db.users.updateOne(_id:ObjectId("  "),{$rename: {balance: "remainingBalance" } }) //rename property name
+db.users.updateOne(_id:ObjectId("  "),{$push: {arrayname: "string" } })
+db.users.updateOne(_id:ObjectId("  "),{$pull: {arrayname: "string" } })
+db.users.updateOne(_id:ObjectId("  "),{$unset: {age: " " } })//delete key
+
+db.users.updateMany( {address: {$exists: true}},{$unset: {address:" "} } )
+
+db.users.replaceOne({age: 29} , {replace: "replace Done"} ) //check of age 29 if avaiable it totally delete all property in that obj and replace with give property and value
+
+db.users.deleteOne(...condition... )
+db.users.deleteMany(...condition..)
+
+
+delete database
+db.dropDatebase()   

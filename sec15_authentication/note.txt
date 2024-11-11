@@ -1,0 +1,42 @@
+npm i bcryptjs.. for passowrd encryption
+
+Route protection.. without login , we can access add-product page by typing url
+
+.................................
+csrf token.
+npm i csurf// for node express
+generate unique token(ie string )is embedded in our form(ie for every page).
+every request that does something on backend,change user state(like senstive operation)
+we include such a token in page and on server this package will check if incoming req does have valid token.
+fake site might send request to backend(uses our session).but the request will be missing a token
+
+for any non-get route this package will check for csrf token in your view
+
+
+res.render('shop/index', {
+            prods: product,
+            pageTitle: 'Shop',
+            path: '/',
+            isAuthenticated: req.session.isLoggedIn,
+            csrfToken: req.csrfToken()//this method is provided by csrf middleware
+            //is added to html with name _csrf because package will check for this name
+            });
+....................................
+
+instead of adding token and auth in every render. we can do it by middleware inside app.js
+setting it to local
+
+csurf() Alternatives
+Unfortunately, the csurf package, which is used in some sections of this course, is no longer maintained at this time. The development team recently deprecated this popular package, saying that it should no longer be used (https://github.com/expressjs/csurf#deprecated).
+
+The purpose of the corresponding course lectures is to explain the general principle of CSRF attacks. You can still safely use the deprecated package for learning purposes, since attacks are only simulated locally in our code.
+
+However, in practice you should now choose a different package (https://www.npmjs.com/search?q=express%20csrf). You may, for example, consider using this package (which has a different API than csurf()): https://www.npmjs.com/package/csrf-csrf.
+
+Please understand that support in this course currently still focuses on the csurf API, as shown in the course videos and code snapshots.
+
+And most importantly, the general principle explained in this course is package independent.
+-----------------------
+
+npm i connect-flash
+message to view "wrong password etc"

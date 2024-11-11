@@ -1,0 +1,2 @@
+problem in this .
+share shop data to other user. if we run page in different browser ..it will fetch data

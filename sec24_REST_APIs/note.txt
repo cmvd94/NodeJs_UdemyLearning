@@ -1,0 +1,30 @@
+REST API handles data .ie we use json format to sent data.
+there is no compulsion that sent obj should be of json format. it can normal obj which is converted to json obj by res.json()
+we have to set status code for response
+because now client side it has to render user interface , based on response..
+
+http://localhost:8080/feed/posts we can see response
+
+for req and response we use json data
+so 
+//app.use(bodyParse.urlencoded())// for x-ww-form-urlencoded
+app.use(bodyParse.json()) //for application/json
+
+download postman. to send request 
+
+now for client we're using CODEPEN in which we're defining button and queryselector,
+when sednign request error popup in console(browser) -No 'Access-Control-Allow-Origin' header is present on the requested resource. 'no-cors'.. check image.
+Cross Origin Resource Sharing
+till now our client and server run on same server & on same port, but REST api run on different server as client send request , so our server code should also cross site req&res 
+we have to setHeader
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');//access to all client
+    res.setHeader('Access-Control-Allow-Method', 'GET', 'POST', 'PUT', 'PATCH', 'DELETE');//we can allow whatever we want too
+    res.setHeader('Access-Control-Allow-Headers','Content-Type, Authorization');//we can alose set wildcard '*'
+    next()
+})
+
+
+on codepen sending post request. obj should have method, json data and Headers
+
+check image 13 where method: option avaiable, which is done by browser . to check post works

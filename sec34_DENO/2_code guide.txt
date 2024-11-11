@@ -1,0 +1,28 @@
+Deno is inbuild global variable.
+But in IDE(vscode) auto suggestion is not available to turn add extension in vscode -  deno
+there is pblm in vscode. so try
+    crtl+shift+p then Deno: Initialize Workspace Configuration 
+    creates below
+    .vscode(folder)->setting.json 
+    {
+    "deno.enable": true
+    }
+----------------------------------------------------------------------------------------------------------------
+Deno secure by default : check image 2
+   -> in node we can read or write file,deleting file, sending or listening network req etc are possible without permission ,that is always unlocked. we can do anything.
+   -> Deno by default is not allowed to do anything. we can do read, write file or handling request. etc
+   ->we have set permission. we want tell deno that we want to write or other operation.
+   flag is set when executing
+     -> deno run --allow-write <filename> //deno run --allow-write=<filenametowrite> <filename>
+     ->deno run --allow-read <filename>
+promise:
+   -> in node when writes file wwe use fs and whereas in DEFAULT it doesnot return promise. for which we use call back within read or write operation or use promises when require('fs').promises so then we can use thenable or await.
+   -> But in DENO in DEFAULT it return promises. here Deno, TextEncoder are global variable 
+Import: 
+   -> nodejs download the package , use that local storeage to import using require  and even esm module import is also done. 
+   ->But Deno use URL IMPORT. no need to download package . just using link we can import. that is CORE CONCEPT OF DENO
+----------------------------------------------------------------------------------------------------------------
+server Initialization: deno run --allow-net app.ts
+check server.txt
+----------------------------------------------------------------------------------------------------------------
+DENO use OAK framework ... node uses express,koa

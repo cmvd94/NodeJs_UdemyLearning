@@ -1,0 +1,1 @@
+/* cart model is created inside user model while pressing add to cart*/

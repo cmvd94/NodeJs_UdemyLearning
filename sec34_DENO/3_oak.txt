@@ -1,0 +1,43 @@
+DENO use OAK framework
+import { Application, Router } from "https://deno.land/x/oak@v12.6.0/mod.ts"
+sometime cache issue will be there so in terimal: deno cache https://deno.land/x/oak@v12.6.0/mod.ts
+----------------------------------------------------------------------------------------------------
+OAK AUTOMATICALLY SEND BACK RESPONSE
+SERVER listen setup:
+import { Application} from "https://deno.land/x/oak@v12.6.0/mod.ts"
+const app = new Application();
+app.use((ctx) => {
+  ctx.response.body = "Hello World!";
+});
+await app.listen({ port: 8000 });
+//ctx-  context obj which has req & res summarized obj
+//next parameter also present
+        terimal :=> deno run --allow-net app.ts
+syntax explaination: 
+  1. routes handling in app.ts:
+       app.use(todosRoutes.routes()); //now its an object in routes.ts routes initialized as new Router();
+       app.use(todosRoutes.allowedMethods()); //to handle routes .we need to allow
+  2. In node -> res.json used to send data . we have tell node that we are sending json data as a response.
+     In Deno -> ctx.response.body used to send response. here we not need to specify data format type, ie if we assign  ctx.response.body to an object , deno understands that we're sending a json data. so transform data to respective format and also set header automatically.
+  3. req data parse:
+     In nodejs ->  we need middleware to parse data through incoming req.(difference parser tech needed for different data type)
+     In deno -> It automatically look at the req, at req.body and auth the req.headers and if the req signals that the request carriers json data, by setting appropriate req headers, oak automatically parse that body and give access the parse body on context.request.body field.
+        body actually gives promise now. and its a method.
+        await data has value property in which data is avaiable
+        so it should be a async function...
+         const result =  ctx.request.body();
+         const data = await result.value// inside data sent obj avaiable
+-----------------MOST IMPORTANT-----------------------
+In oak when ever middleware is called oak automatically sends response 
+app.use( (ctx, next) => {
+  console.log('middleware');
+  next()
+})
+here we're just printing in console. 
+ route middleware (in route folder) if it does not return promise then there is no problem eg:get all todos, in which there is no promise . whereas other route which uses async await which return promises, so middleware response automatically. so to avoid this issue use promises in all middleware.
+so to avoid it
+app.use( async(ctx, next) => {
+  console.log('middleware');
+  await next()
+})
+this tell oak we dont just want to start the next middleware in line, but that we also want to wait for them to finish before we send back that automatically generated response

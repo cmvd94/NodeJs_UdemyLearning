@@ -1,0 +1,38 @@
+/*POST after pressing login store in db*/
+exports.postLogin = ( req, res, next ) => {
+    //req.session created by session middleware
+    UserModel.findById('66b2fc6fd7174398e8f021ab')
+    .then( user => {
+        //req.session.userId = user;// since it is mongoose model. no need to create obj again
+        //storing usermodel in session it wil store as pure obj. rare than schema which we defined
+        req.session.userId = user._id;
+        req.session.isLoggedIn = true
+        res.redirect('/');
+    })
+    .catch(err => console.error(err));
+
+}
+
+
+/*once session is created. req.user is assigned with user*/
+app.use((req, res, next) => {
+    if (req.session && req.session.userId) {
+        //console.log(req.session.userId)
+      UserModel.findById(req.session.userId)
+        .then( user => {
+        if (user) {
+          req.user = user;
+          console.log('req.user = user')
+          next();
+        } else {
+            console.log('flase---------req.user = user')
+          next(new Error('Could not restore User from Session.'));
+        }
+      });
+    } else {
+        console.log('flase---------')
+      next();
+    }
+});
+
+https://stackoverflow.com/questions/18512461/express-cookiesession-and-mongoose-how-can-i-make-request-session-user-be-a-mon/18662693#18662693

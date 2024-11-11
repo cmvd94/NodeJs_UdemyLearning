@@ -1,0 +1,3 @@
+1.what are the operation we can do with req(like req.get())
+    https://www.scaler.com/topics/nodejs/node-js-request/
+2.

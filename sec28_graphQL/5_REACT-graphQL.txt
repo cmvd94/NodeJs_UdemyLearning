@@ -1,0 +1,8 @@
+=>APP.js
+  1. signup handler. fetch(http://localhost:8080/graphql) , method: 'POST'
+     req.body should have graphql query.
+
+=>feed.js
+  1.creating post.
+      graphql unable to handle file. so we have send 2 fetch , one is for storing image using RESTAPI method which return imagePath
+      with that imagePath we're sending request to store post

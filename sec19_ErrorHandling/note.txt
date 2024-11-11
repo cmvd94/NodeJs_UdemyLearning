@@ -1,0 +1,34 @@
+sync code..
+try{
+}catch(err){
+}
+------------------
+async code
+.then()
+.catch().
+---------------------
+imp note..
+if any error happened in server side.. 
+we should catch error. and redirect page(/500) in catch block, stating that server side error.
+ redirect is must because if error occur server get crashed so we have handle tht.
+
+----------------------------
+express error handling middleware.
+
+.catch( err => {
+        const error = new Error(err);
+        error.httpStatusCode = 500;
+        return next(error)//instead of using throw
+ });
+when next called with error obj as argument,
+let express know that error occurred and it will skip all middleware and move right away to an error handling middleware
+
+
+/*error handling middleware...if got more error handling middleware. then it work from top to bottom*/
+app.use((error, req, res, next) => {
+  res.redirect('/500');
+})
+-----------------------------------------
+throw new Error with express middleware.
+eg:
+see js file

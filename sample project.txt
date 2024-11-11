@@ -1,0 +1,3 @@
+implement api and try to store image/file on hosting provider, amazon s3
+
+implement testing for grpahql project

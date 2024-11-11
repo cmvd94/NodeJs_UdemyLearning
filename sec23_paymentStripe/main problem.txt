@@ -1,0 +1,8 @@
+in our case if we type url of order it automatical pass payment mode. success
+in these case we have check with stripe but wa cant do it test mode, it will work only in real world.
+
+in real case:
+web hook 
+we can configure stripe ,it sends a req to a URL of your choice
+which we would have to manage in applicayion routing and that tell the order successed
+because strip send that request 

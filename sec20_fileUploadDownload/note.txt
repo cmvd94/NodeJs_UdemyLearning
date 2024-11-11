@@ -1,0 +1,80 @@
+1.upload file. 
+add product we're uploading image.(html code change in edit-product ejs.
+have to handle same in server side.(in route, controller)
+app.use(bodyParser.urlencoded({ extended: false })); will parse only text ..
+so data from file should be parsed so new package is installed.
+npm i multer..
+so in ejs we have to set enctype="multipart/form-data"... form must know it not only receive text but also file(binary data)
+
+check image 
+
+/*disk storage is storage engine , can pass js obj to config*/
+/*destination and filename are function... then multer will call fo incoming file.
+these func control how the file handled and place to store and naming*/
+const fileStorage = multer.diskStorage( {
+  destination: (req, file, callback) => {
+    /*1st argument null , we can throw error message to inform multer , that something wrong incoming file then it will not store it,
+    if null , then multer will store it.... 2nd argument is where to store it*/
+    callback(null,'image');
+  },//file is data about that obj
+  filename: (req, file, callback) => {
+    console.log(Date.now())
+    callback(null, Date.now().toString() + '-' + file.originalname)
+  }//2nd file name
+})
+
+app.use(multer( {storage: fileStorage} ).single('image'));
+
+storing file should be in our filesystem, not in db but we should store path of the file in db
+
+app.use(multer( {storage: fileStorage, fileFilter: fileFilter} ).single('image'))
+app.use('/image',express.static(path.join(__dirname, 'image')));
+access image in req.file not in body
+see images...
+------------------------------------------------------------------------
+2.invoice
+static file is created and we servered to user. (here is just to view and download in order page)
+
+exports.getInvoice = (req, res, next) => {
+    const orderId = req.params.orderId;
+    OrderModel.findById(orderId)
+    .then(order => {
+        if(!order){
+            next(new Error('No order found'))
+        }else if(order.user.userId.toString() !== req.user._id.toString()){
+            next(new Error('unAuthorised invoice access'))
+            
+        }
+        const invoiceName = 'invoice-'+ orderId+ '.pdf';
+        const invoicePath = path.join(rootPath, 'data', 'invoice', invoiceName);
+        /* fs.readFile(invoicePath, (err, data) => {
+            if(err){
+                next(err);
+            }else{
+                res.setHeader( 'Content-Type', 'application/pdf' );
+                //res.setHeader('Content-Disposition','attachment; filename="' + invoiceName +'"')//download attachment with proper extension
+                res.setHeader('Content-Disposition',' inline; filename=" ' + invoiceName +' " ')
+                //set how the content should be servered to client 
+                //'inline; filename="' + invoiceName +'"'
+                res.send(data);
+            }
+        }) //if we read like this node will acces the file and read entire content into memory and then return it to response. for bigger file this will take very long before response and memory on server might overflow for multiple incoming request
+        */
+        const file = fs.createReadStream(invoicePath) ;
+        //read file by chuck of data and send
+        res.setHeader( 'Content-Type', 'application/pdf' );
+        res.setHeader('Content-Disposition',' inline; filename=" ' + invoiceName +' " ')
+        file.pipe(res);//res is a writable stream
+    })
+    .catch(err => {
+        next(err)
+    })
+}
+--------------------------------------------------------------
+3. creating pdf on server
+generate a file based on real order data
+
+npm i pdfkit (documentation uses coffee script)
+--------------------
+4.delete file
+here delete image from server when image replaced or product deleted

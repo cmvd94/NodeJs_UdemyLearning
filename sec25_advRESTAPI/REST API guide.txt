@@ -1,0 +1,51 @@
+1.created dummy data to display..image 4
+2.created connection btw post req which does creating new post. image 5
+3.npm express-validator, now validating input of feed/post
+4.connect mongodb-mongoose
+5.model is created. while defining Schema, we have added 2nd obj timestamps which automatically add time when created and updated
+6.saved a post in db (route and controller)
+7.get all post code
+8.get a post detail code (route and controller)
+9.adding upload & download file in create post - used MULTER
+    ->inside client code(REACT):(IMPORTANT NOTE)
+    ->finishEditHandler: handle accept button in new post popup..
+    ->now we're tring to send file(ie image). json can not handle it , because it has only text as data. so setting header application/json will lead to site crash.so now it send in formdata(rendering view.multipart form).check how it is done in code
+10.edit post- new http verb PUT to replace.
+    ->Just like POST req , PUT and PATCH req also have body and also have params in url
+    ->in WINDOWS THERE IS PROBLEM IN CORS. EVEN THOUGH PUT AND OTHER VERB ADDED IN HEADERS IT IS NOT PASSING.SO ADDED CORS PACKAGE
+    ->error in client side code while updating , when client didnt select any photo , client should sent old data but it failed. now it is corrected
+    ->fs.unlink old image is done when new image is uploaded
+11.Delete Post. new http verb DELETE to Delete... also fs.unlink is done
+12.Pagination ...data is sent respectively in getPost controller
+13.USER model is created and authentication route file is created
+14.signup route and controller with validation and password encryption(bcryptjs)
+15.login: in general when login successful server provide a session . validate client and sever connection
+    ->Here REST API is stateless. no session is used instead JSON WEB TOKEN is used for authentication
+    ->npm i jsonwebtoken
+    ->json data sent with object contain jsonwebtoken and anyother field client want to 
+    ->chk image 9 and 10
+    --------jsonwebtoken-------------
+    jwt.sign() create a token inside we can also send obj which we want to
+    jwt.sign({obj}, 'secretkey string', expireTiming)
+    ---------JWT Website-------------------chk img10
+    ->with token and secret key we can view obj.
+    ->also we can alter data but token changes instantly
+16.now with token have authenticated edit , delete and post feed
+17.now client should not get access to any of the route until if req is send with token .
+    ->so ever Route handled with isAuth middleware.
+    ->JWT token is set in req HEADERS in Authorization field. and also we set in our app.js to allow Authorization
+    ->res.setHeader('Access-Control-Allow-Headers','Content-Type, Authorization'); but now we're using CORS()
+    ->on client side:
+      fetch('http://localhost:8080/feed/post?page='+ page,{
+      headers: {
+        Authorization: 'Bearer ' + this.props.token
+       }
+     })
+    ->in is-auth.js -token = req.get('Authorization').split(' ')[1]; and verify jwt.verify with secret key. where jwt.verify decode and verify the token received. and is-AUth is set in all routes
+18.connection post and USER. adding userid in postmodel.
+    ->wiseversa id is saved btw post and user in CREATING POST
+19.Update/Edit and delete post only by created user. authentication
+20.while clearing/deleting post we should delete relation btw user
+21.Assignment updating status in user model
+    ->getUserStatus in auth route
+    ->put/patch userStatus  

@@ -1,0 +1,14 @@
+GRAPHIQL.. check image
+is a user interface .where we can test our graphql code. (like postman)
+
+in app file 
+const graphiql = require('express-graphiql-explorer');
+app.use(
+    '/graphiql',
+    graphiql({
+        graphQlEndpoint: '/graphql',
+        defaultQuery: `query MyQuery {}`,
+    })
+);
+
+in browser: localhost:8080/graphiql

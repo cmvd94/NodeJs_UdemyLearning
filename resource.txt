@@ -1,0 +1,58 @@
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers
+
+Official Node.js Docs: https://nodejs.org/en/docs/guides/
+
+Full Node.js Reference (for all core modules): https://nodejs.org/dist/latest/docs/api/
+
+More about the Node.js Event Loop: https://nodejs.org/en/docs/guides/event-loop-timers-and-nexttick/
+
+Blocking and Non-Blocking Code: https://nodejs.org/en/docs/guides/dont-block-the-event-loop/
+
+https://code.visualstudio.com/docs/nodejs/nodejs-debugging
+
+Want to learn more about Pug? Check out their official docs: https://pugjs.org/api/getting-started.html
+
+Pug Docs: https://pugjs.org/api/getting-started.html
+
+Handlebars Docs: https://handlebarsjs.com/
+
+EJS Docs: http://ejs.co/#docs
+
+Learn more about MySQL/ SQL in General: https://www.w3schools.com/sql/
+
+Learn more about the Node MySQL Package: https://github.com/sidorares/node-mysql2
+
+MongoDB Official Docs: https://docs.mongodb.com/manual/core/security-encryption-at-rest/https://docs.mongodb.com/manual/
+
+SQL vs NoSQL: https://academind.com/learn/web-dev/sql-vs-nosql/
+
+Learn more about MongoDB: https://academind.com/learn/mongodb
+
+More on the fetch API: https://developers.google.com/web/updates/2015/03/introduction-to-fetch
+
+More on AJAX Requests: https://developer.mozilla.org/en-US/docs/Web/Guide/AJAX/Getting_Started
+-----------------------------
+
+Here's one important note about hosting our app on Heroku!
+
+The user-generated/ uploaded images, are saved and served as intended. But like all hosting providers that offer virtual servers, your file storage is not persistent!
+
+Your source code is saved and re-deployed when you shut down the server (or when it goes to sleep, as it does automatically after some time in the Heroku free tier).
+
+But your generated and uploaded files are not stored and re-created. They would be lost after a server restart!
+
+Therefore, it's recommended that you use a different storage place when using such a hosting provider.
+
+In cases where you run your own server, which you fully own/ manage, that does of course not apply.
+
+What would be alternatives?
+
+A popular and very efficient + affordable alternative is AWS S3 (Simple Storage Service): https://aws.amazon.com/s3/
+
+You can easily configure multer to store your files there with the help of another package: https://www.npmjs.com/package/multer-s3
+
+To also serve your files, you can use packages like s3-proxy: https://www.npmjs.com/package/s3-proxy
+
+For deleting the files (or interacting with them on your own in general), you'd use the AWS SDK: https://aws.amazon.com/sdk-for-node-js/
+------------------------------
+

@@ -1,0 +1,50 @@
+express doc
+mongoose doc
+
+double csrf bcz scurf is not used in realworld
+
+https://express-validator.github.io/docs/
+https://github.com/validatorjs/validator.js
+
+https://www.json.org/json-en.html
+
+learn payment api package. stripe doesnot work for india
+
+postman doc (API)
+
+https://academind.com/tutorials/building-a-restful-api-with-nodejs
+
+JWT-jsonwebtoken 
+
+socket.io
+Socket.io Official Docs: https://socket.io/get-started/chat/
+
+Alternative Websocket Library: https://www.npmjs.com/package/express-ws
+---------------------------------------------------
+https://www.udemy.com/course/nodejs-the-complete-guide/learn/lecture/12197878#questions/5581302
+abt {...postmodel._doc} or we can use .toObject(). 
+obj and array are reference type .when need to assign to a newobj,eg normally new obj = mongoose obj (contain meta data of monngoose with obj value)
+so when copying data, we should use ._doc or .toObject() to copy data and stored in different address.
+-----------------------------------------
+graphQL, 
+https://graphql.org/graphql-js/running-an-express-graphql-server/
+---------------------------------------------
+joi validator
+------------
+env variable
+https://medium.com/the-node-js-collection/making-your-node-js-work-everywhere-with-environment-variables-2da8cdf6e786
+also check cross-env
+-------------
+helmet
+-------
+serverless API
+https://blog.risingstack.com/node-js-logging-tutorial/
+-----------
+Git and gitHub video'
+-------
+testing
+https://mochajs.org/
+chaijs.com
+--------------------------------------
+typescript
+------------------------
